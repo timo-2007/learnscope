@@ -34,3 +34,14 @@ jobs:
           local_path: './www/*'
           remote_path: '/'
           sftp_only: true
+
+      - name: Deploy .htaccess (dotfiles are skipped by the glob above)
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          username: ${{ secrets.MAIN_STRATO_SFTP_USERNAME }}
+          password: ${{ secrets.MAIN_STRATO_SFTP_PASSWORD }}
+          server: ${{ secrets.STRATO_SFTP_HOST }}
+          port: ${{ secrets.STRATO_SFTP_PORT }}
+          local_path: './www/.htaccess'
+          remote_path: '/'
+          sftp_only: true
