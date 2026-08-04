@@ -1,0 +1,7 @@
+{
+  "name": "learnscope",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
