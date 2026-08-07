@@ -26,6 +26,6 @@ export class LoginPage {
       this.error.set(error.message);
       return;
     }
-    this.router.navigateByUrl('/admin');
+    this.router.navigateByUrl('/tabs/admin');
   }
 }
