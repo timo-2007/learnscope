@@ -11,6 +11,7 @@ import { AuthService } from './core/auth.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss'],
   imports: [
     RouterLink, RouterLinkActive,
     IonApp, IonRouterOutlet, IonSplitPane, IonMenu, IonMenuToggle,
