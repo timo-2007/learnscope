@@ -1,11 +1,27 @@
-import { Component } from '@angular/core';
-import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { Component, inject } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  IonApp, IonRouterOutlet, IonMenu, IonMenuToggle,
+  IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonIcon, IonLabel,
+} from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { homeOutline, libraryOutline, shieldCheckmarkOutline } from 'ionicons/icons';
+import { AuthService } from './core/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [IonApp, IonRouterOutlet],
+  styleUrls: ['app.component.scss'],
+  imports: [
+    RouterLink, RouterLinkActive,
+    IonApp, IonRouterOutlet, IonMenu, IonMenuToggle,
+    IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonIcon, IonLabel,
+  ],
 })
 export class AppComponent {
-  constructor() {}
+  auth = inject(AuthService);
+
+  constructor() {
+    addIcons({ homeOutline, libraryOutline, shieldCheckmarkOutline });
+  }
 }
