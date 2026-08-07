@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Home
+      {{ currentTitle() }}
     </ion-title>
     <ion-buttons slot="end">
       @if (auth.isLoggedIn()) {
