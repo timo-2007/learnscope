@@ -8,11 +8,6 @@ export const routes: Routes = [
     path: 'login',
     loadComponent: () => import('./login/login.page').then((m) => m.LoginPage),
   },
-  {
-    path: 'admin',
-    canActivate: [authGuard],
-    loadComponent: () => import('./admin/dashboard/dashboard.page').then((m) => m.DashboardPage)
-  },
  {
     path: '',
     redirectTo: 'tabs/home',
