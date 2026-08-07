@@ -1,3 +1,58 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>learnscope</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-list>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerLink="/home" routerLinkActive="selected" [routerLinkActiveOptions]="{ exact: true }">
+              <ion-icon name="home-outline" slot="start"></ion-icon>
+              <ion-label>Home</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerLink="/modules" routerLinkActive="selected">
+              <ion-icon name="library-outline" slot="start"></ion-icon>
+              <ion-label>Modules</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          @if (auth.isLoggedIn()) {
+            <ion-menu-toggle auto-hide="false">
+              <ion-item routerLink="/admin" routerLinkActive="selected">
+                <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
+                <ion-label>Admin</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          }
+        </ion-list>
+
+        <ion-list>
+          @if (auth.isLoggedIn()) {
+            <ion-menu-toggle auto-hide="false">
+              <ion-item button (click)="logout()">
+                <ion-icon name="log-out-outline" slot="start"></ion-icon>
+                <ion-label>Logout</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          } @else {
+            <ion-menu-toggle auto-hide="false">
+              <ion-item routerLink="/login">
+                <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+                <ion-label>Login</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          }
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>
