@@ -1,53 +1,38 @@
 <ion-app>
-  <ion-split-pane contentId="main-content">
-    <ion-menu contentId="main-content" [class.collapsed]="menuCollapsed()">
-      <ion-header>
-        <ion-toolbar>
-          @if (!menuCollapsed()) {
-            <ion-title>learnscope</ion-title>
-          }
-          <ion-buttons slot="end">
-            <ion-button (click)="menuCollapsed.set(!menuCollapsed())">
-              <ion-icon [name]="menuCollapsed() ? 'chevron-forward-outline' : 'chevron-back-outline'" slot="icon-only"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
+  <ion-menu contentId="main-content">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>learnscope</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-      <ion-content>
-        <ion-list>
+    <ion-content>
+      <ion-list>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerLink="/home" routerLinkActive="selected" [routerLinkActiveOptions]="{ exact: true }">
+            <ion-icon name="home-outline" slot="start"></ion-icon>
+            <ion-label>Home</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle auto-hide="false">
+          <ion-item routerLink="/modules" routerLinkActive="selected">
+            <ion-icon name="library-outline" slot="start"></ion-icon>
+            <ion-label>Modules</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        @if (auth.isLoggedIn()) {
           <ion-menu-toggle auto-hide="false">
-            <ion-item routerLink="/home" routerLinkActive="selected" [routerLinkActiveOptions]="{ exact: true }">
-              <ion-icon name="home-outline" slot="start"></ion-icon>
-              @if (!menuCollapsed()) {
-                <ion-label>Home</ion-label>
-              }
+            <ion-item routerLink="/admin" routerLinkActive="selected">
+              <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
+              <ion-label>Admin</ion-label>
             </ion-item>
           </ion-menu-toggle>
+        }
+      </ion-list>
+    </ion-content>
+  </ion-menu>
 
-          <ion-menu-toggle auto-hide="false">
-            <ion-item routerLink="/modules" routerLinkActive="selected">
-              <ion-icon name="library-outline" slot="start"></ion-icon>
-              @if (!menuCollapsed()) {
-                <ion-label>Modules</ion-label>
-              }
-            </ion-item>
-          </ion-menu-toggle>
-
-          @if (auth.isLoggedIn()) {
-            <ion-menu-toggle auto-hide="false">
-              <ion-item routerLink="/admin" routerLinkActive="selected">
-                <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
-                @if (!menuCollapsed()) {
-                  <ion-label>Admin</ion-label>
-                }
-              </ion-item>
-            </ion-menu-toggle>
-          }
-        </ion-list>
-      </ion-content>
-    </ion-menu>
-
-    <ion-router-outlet id="main-content"></ion-router-outlet>
-  </ion-split-pane>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>

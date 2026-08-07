@@ -1,12 +1,11 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
-  IonApp, IonRouterOutlet, IonSplitPane, IonMenu, IonMenuToggle,
+  IonApp, IonRouterOutlet, IonMenu, IonMenuToggle,
   IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonIcon, IonLabel,
-  IonButtons, IonButton,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { homeOutline, libraryOutline, shieldCheckmarkOutline, chevronBackOutline, chevronForwardOutline } from 'ionicons/icons';
+import { homeOutline, libraryOutline, shieldCheckmarkOutline } from 'ionicons/icons';
 import { AuthService } from './core/auth.service';
 
 @Component({
@@ -15,16 +14,14 @@ import { AuthService } from './core/auth.service';
   styleUrls: ['app.component.scss'],
   imports: [
     RouterLink, RouterLinkActive,
-    IonApp, IonRouterOutlet, IonSplitPane, IonMenu, IonMenuToggle,
+    IonApp, IonRouterOutlet, IonMenu, IonMenuToggle,
     IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonIcon, IonLabel,
-    IonButtons, IonButton,
   ],
 })
 export class AppComponent {
   auth = inject(AuthService);
-  menuCollapsed = signal(false);
 
   constructor() {
-    addIcons({ homeOutline, libraryOutline, shieldCheckmarkOutline, chevronBackOutline, chevronForwardOutline });
+    addIcons({ homeOutline, libraryOutline, shieldCheckmarkOutline });
   }
 }
