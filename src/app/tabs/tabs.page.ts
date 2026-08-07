@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { homeOutline, libraryOutline, shieldCheckmarkOutline } from 'ionicons/icons';
+import { homeOutline, libraryOutline, lockClosedOutline, shieldCheckmarkOutline } from 'ionicons/icons';
 import { AuthService } from '../core/auth.service';
 
 addIcons({ homeOutline, libraryOutline });
@@ -18,5 +18,6 @@ export class TabsPage {
     addIcons({ homeOutline });
     addIcons({ libraryOutline });
     addIcons({ shieldCheckmarkOutline });
+    addIcons({ lockClosedOutline })
   }
 }
