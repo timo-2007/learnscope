@@ -1,0 +1,19 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ isNew ? 'Neues Topic' : 'Topic bearbeiten' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="save()">Speichern</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-item lines="full">
+    <ion-input label="Titel" labelPlacement="stacked" [ngModel]="title()" (ngModelChange)="title.set($event)"></ion-input>
+  </ion-item>
+
+  <app-markdown-editor [value]="content()" (valueChange)="content.set($event)"></app-markdown-editor>
+</ion-content>

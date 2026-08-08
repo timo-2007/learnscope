@@ -1,0 +1,21 @@
+.row-action {
+  --padding-start: 8px;
+  --padding-end: 8px;
+
+  ion-icon {
+    font-size: 22px;
+  }
+}
+
+.nested {
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+
+  ion-button[size="small"] {
+    align-self: flex-start;
+    margin: 4px 0;
+  }
+}

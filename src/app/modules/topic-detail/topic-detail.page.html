@@ -1,0 +1,16 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+      <ion-back-button [defaultHref]="'/modules/' + moduleId + '/' + subjectId"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ title() }}</ion-title>
+    <ion-buttons slot="end">
+      <app-auth-button></app-auth-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div #renderedContent class="topic-content" [innerHTML]="html()"></div>
+</ion-content>

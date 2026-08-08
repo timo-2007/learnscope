@@ -1,21 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonMenuButton } from '@ionic/angular/standalone';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import {
+  IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonMenuButton,
+  IonList, IonItem, IonLabel,
+} from '@ionic/angular/standalone';
 import { AuthButtonComponent } from '../core/auth-button.component';
+import { ContentService, ModuleEntry } from '../core/content.service';
 
 @Component({
   selector: 'app-modules',
   templateUrl: './modules.page.html',
   styleUrls: ['./modules.page.scss'],
-  standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonMenuButton, AuthButtonComponent, CommonModule, FormsModule]
+  imports: [
+    RouterLink,
+    IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonMenuButton,
+    IonList, IonItem, IonLabel,
+    AuthButtonComponent,
+  ],
 })
 export class ModulesPage implements OnInit {
+  private content = inject(ContentService);
 
-  constructor() { }
+  modules = signal<ModuleEntry[]>([]);
 
   ngOnInit() {
+    this.content.getModules().then(({ data }) => {
+      this.modules.set(data ?? []);
+    });
   }
-
 }
