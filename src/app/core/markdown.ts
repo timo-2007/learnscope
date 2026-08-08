@@ -4,6 +4,7 @@ declare global {
   interface Window {
     MathJax?: {
       typesetPromise?: (elements: Element[]) => Promise<void>;
+      typesetClear?: (elements: Element[]) => void;
     };
   }
 }
@@ -34,5 +35,11 @@ export function renderMarkdown(source: string): string {
 }
 
 export function typesetMath(element: Element): void {
+  window.MathJax?.typesetPromise?.([element]);
+}
+
+/** Re-typesets an element whose raw LaTeX text content changes repeatedly (e.g. a live preview). */
+export function retypesetMath(element: Element): void {
+  window.MathJax?.typesetClear?.([element]);
   window.MathJax?.typesetPromise?.([element]);
 }

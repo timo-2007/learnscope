@@ -4,10 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import {
   IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
-  IonItem, IonLabel, IonInput, IonTextarea, IonSegment, IonSegmentButton,
+  IonItem, IonLabel, IonInput, IonTextarea, IonSegment, IonSegmentButton, IonModal,
 } from '@ionic/angular/standalone';
 import { ContentService } from '../../core/content.service';
-import { renderMarkdown, typesetMath } from '../../core/markdown';
+import { renderMarkdown, typesetMath, retypesetMath } from '../../core/markdown';
 
 @Component({
   selector: 'app-topic-editor',
@@ -16,7 +16,7 @@ import { renderMarkdown, typesetMath } from '../../core/markdown';
   imports: [
     FormsModule,
     IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
-    IonItem, IonLabel, IonInput, IonTextarea, IonSegment, IonSegmentButton,
+    IonItem, IonLabel, IonInput, IonTextarea, IonSegment, IonSegmentButton, IonModal,
   ],
 })
 export class TopicEditorPage implements OnInit {
@@ -26,6 +26,7 @@ export class TopicEditorPage implements OnInit {
   private sanitizer = inject(DomSanitizer);
   private previewEl = viewChild<ElementRef<HTMLElement>>('previewContent');
   private textareaRef = viewChild<IonTextarea>('contentTextarea');
+  private formulaPreviewEl = viewChild<ElementRef<HTMLElement>>('formulaPreview');
 
   private topicId = this.route.snapshot.paramMap.get('topicId');
   private subjectId = this.route.snapshot.paramMap.get('subjectId');
@@ -35,6 +36,10 @@ export class TopicEditorPage implements OnInit {
   content = signal('');
   mode = signal<'write' | 'preview'>('write');
   preview = signal<SafeHtml>('');
+
+  formulaModalOpen = signal(false);
+  formulaSource = signal('');
+  private formulaDebounce?: ReturnType<typeof setTimeout>;
 
   ngOnInit() {
     if (this.topicId) {
@@ -74,6 +79,33 @@ export class TopicEditorPage implements OnInit {
       textarea.focus();
       textarea.setSelectionRange(cursor, cursor);
     });
+  }
+
+  openFormulaEditor() {
+    this.formulaSource.set('');
+    this.formulaModalOpen.set(true);
+    setTimeout(() => this.renderFormulaPreview());
+  }
+
+  onFormulaInput(value: string) {
+    this.formulaSource.set(value);
+    clearTimeout(this.formulaDebounce);
+    this.formulaDebounce = setTimeout(() => this.renderFormulaPreview(), 200);
+  }
+
+  private renderFormulaPreview() {
+    const el = this.formulaPreviewEl()?.nativeElement;
+    if (!el) return;
+    el.textContent = this.formulaSource().trim() ? `$$${this.formulaSource()}$$` : '';
+    retypesetMath(el);
+  }
+
+  insertFormula() {
+    const formula = this.formulaSource().trim();
+    if (formula) {
+      this.insertAtCursor(`$${formula}$`);
+    }
+    this.formulaModalOpen.set(false);
   }
 
   async save() {

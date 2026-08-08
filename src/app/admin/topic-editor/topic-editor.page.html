@@ -26,14 +26,16 @@
 
   @if (mode() === 'write') {
     <div class="editor-toolbar">
-      <ion-button size="small" fill="outline" (click)="insertAtCursor('**', '**')"><b>F</b></ion-button>
-      <ion-button size="small" fill="outline" (click)="insertAtCursor('<u>', '</u>')"><u>U</u></ion-button>
-      <ion-button size="small" fill="outline" (click)="insertAtCursor('$', '$')">$x$</ion-button>
-      <ion-button size="small" fill="outline" (click)="insertAtCursor('\n$$\n', '\n$$\n')">$$x$$</ion-button>
-      <ion-button size="small" fill="outline" (click)="insertAtCursor('\\frac{', '}{}')">a/b</ion-button>
-      <ion-button size="small" fill="outline" (click)="insertAtCursor('\\sqrt{', '}')">&radic;</ion-button>
-      <ion-button size="small" fill="outline" (click)="insertAtCursor('', '^{}')">x&sup2;</ion-button>
-      <ion-button size="small" fill="outline" (click)="insertAtCursor('', '_{}')">x&#8322;</ion-button>
+      <div class="toolbar-group">
+        <ion-button size="small" fill="clear" (click)="insertAtCursor('**', '**')"><b>B</b></ion-button>
+        <ion-button size="small" fill="clear" (click)="insertAtCursor('*', '*')"><i>I</i></ion-button>
+        <ion-button size="small" fill="clear" (click)="insertAtCursor('<u>', '</u>')"><u>U</u></ion-button>
+        <ion-button size="small" fill="clear" (click)="insertAtCursor('~~', '~~')"><s>S</s></ion-button>
+      </div>
+
+      <div class="toolbar-group">
+        <ion-button size="small" fill="clear" (click)="openFormulaEditor()">∑ Formel</ion-button>
+      </div>
     </div>
 
     <ion-item lines="full">
@@ -50,4 +52,32 @@
   } @else {
     <div #previewContent class="preview" [innerHTML]="preview()"></div>
   }
+
+  <ion-modal [isOpen]="formulaModalOpen()" (didDismiss)="formulaModalOpen.set(false)" class="formula-modal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Formel einfügen</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="formulaModalOpen.set(false)">Abbrechen</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div #formulaPreview class="formula-preview"></div>
+
+        <ion-item lines="full">
+          <ion-input
+            label="LaTeX"
+            labelPlacement="stacked"
+            placeholder="z.B. \frac{1}{2}"
+            [ngModel]="formulaSource()"
+            (ngModelChange)="onFormulaInput($event)"
+          ></ion-input>
+        </ion-item>
+
+        <ion-button expand="block" (click)="insertFormula()">Einfügen</ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>
