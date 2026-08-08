@@ -81,6 +81,23 @@ export class TopicEditorPage implements OnInit {
     });
   }
 
+  async insertLinePrefix(prefix: string) {
+    const textarea = await this.textareaRef()?.getInputElement();
+    if (!textarea) return;
+
+    const cursor = textarea.selectionStart ?? 0;
+    const value = this.content();
+    const lineStart = value.lastIndexOf('\n', cursor - 1) + 1;
+
+    this.content.set(value.slice(0, lineStart) + prefix + value.slice(lineStart));
+
+    setTimeout(() => {
+      const newCursor = cursor + prefix.length;
+      textarea.focus();
+      textarea.setSelectionRange(newCursor, newCursor);
+    });
+  }
+
   openFormulaEditor() {
     this.formulaSource.set('');
     this.formulaModalOpen.set(true);

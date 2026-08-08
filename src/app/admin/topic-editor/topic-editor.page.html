@@ -34,6 +34,23 @@
       </div>
 
       <div class="toolbar-group">
+        <ion-button size="small" fill="clear" (click)="insertLinePrefix('# ')">H1</ion-button>
+        <ion-button size="small" fill="clear" (click)="insertLinePrefix('## ')">H2</ion-button>
+        <ion-button size="small" fill="clear" (click)="insertLinePrefix('### ')">H3</ion-button>
+      </div>
+
+      <div class="toolbar-group">
+        <ion-button size="small" fill="clear" (click)="insertLinePrefix('- ')">&bull;</ion-button>
+        <ion-button size="small" fill="clear" (click)="insertLinePrefix('1. ')">1.</ion-button>
+        <ion-button size="small" fill="clear" (click)="insertLinePrefix('> ')">&gt;</ion-button>
+      </div>
+
+      <div class="toolbar-group">
+        <ion-button size="small" fill="clear" (click)="insertAtCursor('`', '`')">&lt;/&gt;</ion-button>
+        <ion-button size="small" fill="clear" (click)="insertAtCursor('[', '](url)')">&#128279;</ion-button>
+      </div>
+
+      <div class="toolbar-group">
         <ion-button size="small" fill="clear" (click)="openFormulaEditor()">∑ Formel</ion-button>
       </div>
     </div>
