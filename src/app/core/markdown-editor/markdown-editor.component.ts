@@ -20,7 +20,9 @@ export class MarkdownEditorComponent implements AfterViewInit, OnChanges, OnDest
       height: 420,
       mode: 'ir',
       lang: 'de_DE',
+      theme: 'dark',
       preview: {
+        theme: { current: 'dark' },
         math: {
           engine: 'MathJax',
           inlineDigit: true,
