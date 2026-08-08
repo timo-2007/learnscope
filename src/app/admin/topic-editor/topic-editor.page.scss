@@ -2,3 +2,14 @@
   padding: 16px;
   line-height: 1.6;
 }
+
+.editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0;
+
+  ion-button {
+    margin: 0;
+  }
+}

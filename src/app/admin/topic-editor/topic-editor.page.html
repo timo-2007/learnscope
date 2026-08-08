@@ -11,7 +11,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <ion-item>
+  <ion-item lines="full">
     <ion-input label="Titel" labelPlacement="stacked" [ngModel]="title()" (ngModelChange)="title.set($event)"></ion-input>
   </ion-item>
 
@@ -25,8 +25,20 @@
   </ion-segment>
 
   @if (mode() === 'write') {
-    <ion-item>
+    <div class="editor-toolbar">
+      <ion-button size="small" fill="outline" (click)="insertAtCursor('**', '**')"><b>F</b></ion-button>
+      <ion-button size="small" fill="outline" (click)="insertAtCursor('<u>', '</u>')"><u>U</u></ion-button>
+      <ion-button size="small" fill="outline" (click)="insertAtCursor('$', '$')">$x$</ion-button>
+      <ion-button size="small" fill="outline" (click)="insertAtCursor('\n$$\n', '\n$$\n')">$$x$$</ion-button>
+      <ion-button size="small" fill="outline" (click)="insertAtCursor('\\frac{', '}{}')">a/b</ion-button>
+      <ion-button size="small" fill="outline" (click)="insertAtCursor('\\sqrt{', '}')">&radic;</ion-button>
+      <ion-button size="small" fill="outline" (click)="insertAtCursor('', '^{}')">x&sup2;</ion-button>
+      <ion-button size="small" fill="outline" (click)="insertAtCursor('', '_{}')">x&#8322;</ion-button>
+    </div>
+
+    <ion-item lines="full">
       <ion-textarea
+        #contentTextarea
         label="Inhalt (Markdown + $LaTeX$)"
         labelPlacement="stacked"
         [ngModel]="content()"

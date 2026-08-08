@@ -25,6 +25,7 @@ export class TopicEditorPage implements OnInit {
   private contentService = inject(ContentService);
   private sanitizer = inject(DomSanitizer);
   private previewEl = viewChild<ElementRef<HTMLElement>>('previewContent');
+  private textareaRef = viewChild<IonTextarea>('contentTextarea');
 
   private topicId = this.route.snapshot.paramMap.get('topicId');
   private subjectId = this.route.snapshot.paramMap.get('subjectId');
@@ -55,6 +56,24 @@ export class TopicEditorPage implements OnInit {
         if (el) typesetMath(el);
       });
     }
+  }
+
+  async insertAtCursor(before: string, after = '') {
+    const textarea = await this.textareaRef()?.getInputElement();
+    if (!textarea) return;
+
+    const start = textarea.selectionStart ?? 0;
+    const end = textarea.selectionEnd ?? 0;
+    const value = this.content();
+    const selected = value.slice(start, end);
+
+    this.content.set(value.slice(0, start) + before + selected + after + value.slice(end));
+
+    setTimeout(() => {
+      const cursor = start + before.length + selected.length;
+      textarea.focus();
+      textarea.setSelectionRange(cursor, cursor);
+    });
   }
 
   async save() {
