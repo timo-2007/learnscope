@@ -1,0 +1,14 @@
+.topic-content {
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+
+  // ::ng-deep: content comes from [innerHTML] (rendered Markdown), so it never
+  // gets Angular's emulated-encapsulation attribute and plain scoped rules won't match it.
+  ::ng-deep pre {
+    overflow-x: auto;
+    padding: 12px;
+    background: var(--ion-color-light);
+    border-radius: 8px;
+  }
+}

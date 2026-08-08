@@ -1,0 +1,25 @@
+// Vditor's dark preset is a lighter blue-gray than the app's own dark background;
+// darken it to match instead of standing out as a lighter box.
+:host ::ng-deep .vditor.vditor--dark {
+  --textarea-background-color: #121212;
+  --panel-background-color: #161616;
+  --toolbar-background-color: #161616;
+  --border-color: #2a2a2a;
+}
+
+ion-modal.formula-modal {
+  --width: 480px;
+  --height: 380px;
+  --border-radius: 12px;
+}
+
+.formula-preview {
+  min-height: 48px;
+  padding: 12px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ion-color-light);
+  border-radius: 8px;
+}
