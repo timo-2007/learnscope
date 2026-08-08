@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ isNew ? 'Neues Topic' : 'Topic bearbeiten' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="save()">Speichern</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-item>
+    <ion-input label="Titel" labelPlacement="stacked" [ngModel]="title()" (ngModelChange)="title.set($event)"></ion-input>
+  </ion-item>
+
+  <ion-segment [value]="mode()" (ionChange)="setMode($any($event.detail.value))">
+    <ion-segment-button value="write">
+      <ion-label>Schreiben</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="preview">
+      <ion-label>Vorschau</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  @if (mode() === 'write') {
+    <ion-item>
+      <ion-textarea
+        label="Inhalt (Markdown + $LaTeX$)"
+        labelPlacement="stacked"
+        [ngModel]="content()"
+        (ngModelChange)="content.set($event)"
+        [autoGrow]="true"
+        rows="16"
+      ></ion-textarea>
+    </ion-item>
+  } @else {
+    <div #previewContent class="preview" [innerHTML]="preview()"></div>
+  }
+</ion-content>
