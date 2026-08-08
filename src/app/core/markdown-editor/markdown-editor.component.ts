@@ -27,6 +27,7 @@ export class MarkdownEditorComponent implements AfterViewInit, OnChanges, OnDest
           engine: 'MathJax',
           inlineDigit: true,
         },
+        actions: [],
       },
       toolbar: [
         'headings', 'bold', 'italic', 'strike', 'link', '|',
