@@ -14,11 +14,11 @@
 <ion-content [fullscreen]="true">
   <ion-list>
     @for (subject of subjects(); track subject.id) {
-      <ion-item [routerLink]="['/modules', moduleId, subject.id]" button>
+      <ion-item lines="full" [routerLink]="['/modules', moduleId, subject.id]" button>
         <ion-label>{{ subject.title }}</ion-label>
       </ion-item>
     } @empty {
-      <ion-item>
+      <ion-item lines="full">
         <ion-label color="medium">Noch keine Subjects vorhanden.</ion-label>
       </ion-item>
     }

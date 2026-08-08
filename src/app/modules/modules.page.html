@@ -19,11 +19,11 @@
 
   <ion-list>
     @for (module of modules(); track module.id) {
-      <ion-item [routerLink]="['/modules', module.id]" button>
+      <ion-item lines="full" [routerLink]="['/modules', module.id]" button>
         <ion-label>{{ module.title }}</ion-label>
       </ion-item>
     } @empty {
-      <ion-item>
+      <ion-item lines="full">
         <ion-label color="medium">Noch keine Module vorhanden.</ion-label>
       </ion-item>
     }

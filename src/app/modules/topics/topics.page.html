@@ -14,11 +14,11 @@
 <ion-content [fullscreen]="true">
   <ion-list>
     @for (topic of topics(); track topic.id) {
-      <ion-item [routerLink]="['/modules', moduleId, subjectId, topic.id]" button>
+      <ion-item lines="full" [routerLink]="['/modules', moduleId, subjectId, topic.id]" button>
         <ion-label>{{ topic.title }}</ion-label>
       </ion-item>
     } @empty {
-      <ion-item>
+      <ion-item lines="full">
         <ion-label color="medium">Noch keine Topics vorhanden.</ion-label>
       </ion-item>
     }
