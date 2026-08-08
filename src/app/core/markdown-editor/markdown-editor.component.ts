@@ -47,11 +47,11 @@ export class MarkdownEditorComponent implements AfterViewInit, OnChanges, OnDest
         {
           name: 'formula',
           tip: 'Formel einfügen',
-          icon: '∑',
+          icon: '<svg viewBox="0 0 32 32"><text x="16" y="24" text-anchor="middle" font-size="26" fill="currentColor">∑</text></svg>',
           click: () => this.openFormulaEditor(),
         },
         '|',
-        'edit-mode', 'preview', 'fullscreen',
+        'edit-mode', 'preview',
       ],
       cache: { enable: false },
       after: () => {
