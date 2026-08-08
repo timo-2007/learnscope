@@ -32,7 +32,7 @@ export class MarkdownEditorComponent implements AfterViewInit, OnChanges, OnDest
       toolbar: [
         'headings', 'bold', 'italic', 'strike', 'link', '|',
         'quote', 'code', 'inline-code', '|',
-        'edit-mode', 'preview', 'fullscreen', 'help',
+        'edit-mode', 'preview', 'fullscreen',
       ],
       cache: { enable: false },
       after: () => {
