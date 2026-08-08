@@ -1,13 +1,12 @@
-import { Component, OnInit, inject, signal, ElementRef, viewChild } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import {
   IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
-  IonItem, IonLabel, IonInput, IonTextarea, IonSegment, IonSegmentButton, IonModal,
+  IonItem, IonInput,
 } from '@ionic/angular/standalone';
+import { FormsModule } from '@angular/forms';
+import { MarkdownEditorComponent } from '../../core/markdown-editor/markdown-editor.component';
 import { ContentService } from '../../core/content.service';
-import { renderMarkdown, typesetMath, retypesetMath } from '../../core/markdown';
 
 @Component({
   selector: 'app-topic-editor',
@@ -16,17 +15,14 @@ import { renderMarkdown, typesetMath, retypesetMath } from '../../core/markdown'
   imports: [
     FormsModule,
     IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonButton,
-    IonItem, IonLabel, IonInput, IonTextarea, IonSegment, IonSegmentButton, IonModal,
+    IonItem, IonInput,
+    MarkdownEditorComponent,
   ],
 })
 export class TopicEditorPage implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private contentService = inject(ContentService);
-  private sanitizer = inject(DomSanitizer);
-  private previewEl = viewChild<ElementRef<HTMLElement>>('previewContent');
-  private textareaRef = viewChild<IonTextarea>('contentTextarea');
-  private formulaPreviewEl = viewChild<ElementRef<HTMLElement>>('formulaPreview');
 
   private topicId = this.route.snapshot.paramMap.get('topicId');
   private subjectId = this.route.snapshot.paramMap.get('subjectId');
@@ -34,12 +30,6 @@ export class TopicEditorPage implements OnInit {
 
   title = signal('');
   content = signal('');
-  mode = signal<'write' | 'preview'>('write');
-  preview = signal<SafeHtml>('');
-
-  formulaModalOpen = signal(false);
-  formulaSource = signal('');
-  private formulaDebounce?: ReturnType<typeof setTimeout>;
 
   ngOnInit() {
     if (this.topicId) {
@@ -50,79 +40,6 @@ export class TopicEditorPage implements OnInit {
         this.subjectId = data.subject_id;
       });
     }
-  }
-
-  setMode(mode: 'write' | 'preview') {
-    this.mode.set(mode);
-    if (mode === 'preview') {
-      this.preview.set(this.sanitizer.bypassSecurityTrustHtml(renderMarkdown(this.content())));
-      setTimeout(() => {
-        const el = this.previewEl()?.nativeElement;
-        if (el) typesetMath(el);
-      });
-    }
-  }
-
-  async insertAtCursor(before: string, after = '') {
-    const textarea = await this.textareaRef()?.getInputElement();
-    if (!textarea) return;
-
-    const start = textarea.selectionStart ?? 0;
-    const end = textarea.selectionEnd ?? 0;
-    const value = this.content();
-    const selected = value.slice(start, end);
-
-    this.content.set(value.slice(0, start) + before + selected + after + value.slice(end));
-
-    setTimeout(() => {
-      const cursor = start + before.length + selected.length;
-      textarea.focus();
-      textarea.setSelectionRange(cursor, cursor);
-    });
-  }
-
-  async insertLinePrefix(prefix: string) {
-    const textarea = await this.textareaRef()?.getInputElement();
-    if (!textarea) return;
-
-    const cursor = textarea.selectionStart ?? 0;
-    const value = this.content();
-    const lineStart = value.lastIndexOf('\n', cursor - 1) + 1;
-
-    this.content.set(value.slice(0, lineStart) + prefix + value.slice(lineStart));
-
-    setTimeout(() => {
-      const newCursor = cursor + prefix.length;
-      textarea.focus();
-      textarea.setSelectionRange(newCursor, newCursor);
-    });
-  }
-
-  openFormulaEditor() {
-    this.formulaSource.set('');
-    this.formulaModalOpen.set(true);
-    setTimeout(() => this.renderFormulaPreview());
-  }
-
-  onFormulaInput(value: string) {
-    this.formulaSource.set(value);
-    clearTimeout(this.formulaDebounce);
-    this.formulaDebounce = setTimeout(() => this.renderFormulaPreview(), 200);
-  }
-
-  private renderFormulaPreview() {
-    const el = this.formulaPreviewEl()?.nativeElement;
-    if (!el) return;
-    el.textContent = this.formulaSource().trim() ? `$$${this.formulaSource()}$$` : '';
-    retypesetMath(el);
-  }
-
-  insertFormula() {
-    const formula = this.formulaSource().trim();
-    if (formula) {
-      this.insertAtCursor(`$${formula}$`);
-    }
-    this.formulaModalOpen.set(false);
   }
 
   async save() {
