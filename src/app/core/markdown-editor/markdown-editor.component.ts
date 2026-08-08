@@ -19,6 +19,7 @@ export class MarkdownEditorComponent implements AfterViewInit, OnChanges, OnDest
     this.vditor = new Vditor(this.editorEl().nativeElement, {
       height: 420,
       mode: 'ir',
+      lang: 'de_DE',
       preview: {
         math: {
           engine: 'MathJax',
