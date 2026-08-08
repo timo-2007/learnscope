@@ -1,0 +1,12 @@
+.nested {
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+
+  ion-button[size="small"] {
+    align-self: flex-start;
+    margin: 4px 0;
+  }
+}

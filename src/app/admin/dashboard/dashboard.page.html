@@ -10,10 +10,73 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Admin</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-button (click)="addModule()">
+    <ion-icon name="add-outline" slot="start"></ion-icon>
+    Neues Module
+  </ion-button>
+
+  <ion-list>
+    @for (module of modules(); track module.id) {
+      <ion-item button (click)="toggleModule(module.id)">
+        <ion-icon [name]="expandedModuleId() === module.id ? 'chevron-down-outline' : 'chevron-forward-outline'" slot="start"></ion-icon>
+        <ion-label>{{ module.title }}</ion-label>
+        <ion-button fill="clear" (click)="editModule(module); $event.stopPropagation()">
+          <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" color="danger" (click)="deleteModule(module); $event.stopPropagation()">
+          <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      @if (expandedModuleId() === module.id) {
+        <div class="nested">
+          <ion-button size="small" fill="outline" (click)="addSubject(module.id)">
+            <ion-icon name="add-outline" slot="start"></ion-icon>
+            Neues Subject
+          </ion-button>
+
+          @for (subject of subjectsByModule()[module.id]; track subject.id) {
+            <ion-item button (click)="toggleSubject(subject.id)">
+              <ion-icon [name]="expandedSubjectId() === subject.id ? 'chevron-down-outline' : 'chevron-forward-outline'" slot="start"></ion-icon>
+              <ion-label>{{ subject.title }}</ion-label>
+              <ion-button fill="clear" (click)="editSubject(subject); $event.stopPropagation()">
+                <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+              </ion-button>
+              <ion-button fill="clear" color="danger" (click)="deleteSubject(subject); $event.stopPropagation()">
+                <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+              </ion-button>
+            </ion-item>
+
+            @if (expandedSubjectId() === subject.id) {
+              <div class="nested">
+                <ion-button size="small" fill="outline" [routerLink]="['/admin/topics/new', subject.id]">
+                  <ion-icon name="add-outline" slot="start"></ion-icon>
+                  Neues Topic
+                </ion-button>
+
+                @for (topic of topicsBySubject()[subject.id]; track topic.id) {
+                  <ion-item>
+                    <ion-label>{{ topic.title }}</ion-label>
+                    <ion-button fill="clear" [routerLink]="['/admin/topics', topic.id, 'edit']">
+                      <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+                    </ion-button>
+                    <ion-button fill="clear" color="danger" (click)="deleteTopic(topic)">
+                      <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+                    </ion-button>
+                  </ion-item>
+                } @empty {
+                  <ion-item><ion-label color="medium">Keine Topics.</ion-label></ion-item>
+                }
+              </div>
+            }
+          } @empty {
+            <ion-item><ion-label color="medium">Keine Subjects.</ion-label></ion-item>
+          }
+        </div>
+      }
+    } @empty {
+      <ion-item><ion-label color="medium">Noch keine Module vorhanden.</ion-label></ion-item>
+    }
+  </ion-list>
 </ion-content>
