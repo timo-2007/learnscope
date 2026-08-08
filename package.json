@@ -29,6 +29,7 @@
     "@ionic/angular": "^8.0.0",
     "@supabase/supabase-js": "^2.112.2",
     "ionicons": "^7.0.0",
+    "marked": "^18.0.9",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
