@@ -18,13 +18,13 @@
 
   <ion-list>
     @for (module of modules(); track module.id) {
-      <ion-item button (click)="toggleModule(module.id)">
+      <ion-item lines="full" button (click)="toggleModule(module.id)">
         <ion-icon [name]="expandedModuleId() === module.id ? 'chevron-down-outline' : 'chevron-forward-outline'" slot="start"></ion-icon>
         <ion-label>{{ module.title }}</ion-label>
-        <ion-button fill="clear" (click)="editModule(module); $event.stopPropagation()">
+        <ion-button class="row-action" fill="clear" (click)="editModule(module); $event.stopPropagation()">
           <ion-icon name="create-outline" slot="icon-only"></ion-icon>
         </ion-button>
-        <ion-button fill="clear" color="danger" (click)="deleteModule(module); $event.stopPropagation()">
+        <ion-button class="row-action" fill="clear" color="danger" (click)="deleteModule(module); $event.stopPropagation()">
           <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
         </ion-button>
       </ion-item>
@@ -37,13 +37,13 @@
           </ion-button>
 
           @for (subject of subjectsByModule()[module.id]; track subject.id) {
-            <ion-item button (click)="toggleSubject(subject.id)">
+            <ion-item lines="full" button (click)="toggleSubject(subject.id)">
               <ion-icon [name]="expandedSubjectId() === subject.id ? 'chevron-down-outline' : 'chevron-forward-outline'" slot="start"></ion-icon>
               <ion-label>{{ subject.title }}</ion-label>
-              <ion-button fill="clear" (click)="editSubject(subject); $event.stopPropagation()">
+              <ion-button class="row-action" fill="clear" (click)="editSubject(subject); $event.stopPropagation()">
                 <ion-icon name="create-outline" slot="icon-only"></ion-icon>
               </ion-button>
-              <ion-button fill="clear" color="danger" (click)="deleteSubject(subject); $event.stopPropagation()">
+              <ion-button class="row-action" fill="clear" color="danger" (click)="deleteSubject(subject); $event.stopPropagation()">
                 <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
               </ion-button>
             </ion-item>
@@ -56,27 +56,27 @@
                 </ion-button>
 
                 @for (topic of topicsBySubject()[subject.id]; track topic.id) {
-                  <ion-item>
+                  <ion-item lines="full">
                     <ion-label>{{ topic.title }}</ion-label>
-                    <ion-button fill="clear" [routerLink]="['/admin/topics', topic.id, 'edit']">
+                    <ion-button class="row-action" fill="clear" [routerLink]="['/admin/topics', topic.id, 'edit']">
                       <ion-icon name="create-outline" slot="icon-only"></ion-icon>
                     </ion-button>
-                    <ion-button fill="clear" color="danger" (click)="deleteTopic(topic)">
+                    <ion-button class="row-action" fill="clear" color="danger" (click)="deleteTopic(topic)">
                       <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
                     </ion-button>
                   </ion-item>
                 } @empty {
-                  <ion-item><ion-label color="medium">Keine Topics.</ion-label></ion-item>
+                  <ion-item lines="full"><ion-label color="medium">Keine Topics.</ion-label></ion-item>
                 }
               </div>
             }
           } @empty {
-            <ion-item><ion-label color="medium">Keine Subjects.</ion-label></ion-item>
+            <ion-item lines="full"><ion-label color="medium">Keine Subjects.</ion-label></ion-item>
           }
         </div>
       }
     } @empty {
-      <ion-item><ion-label color="medium">Noch keine Module vorhanden.</ion-label></ion-item>
+      <ion-item lines="full"><ion-label color="medium">Noch keine Module vorhanden.</ion-label></ion-item>
     }
   </ion-list>
 </ion-content>
