@@ -40,7 +40,7 @@
                 "output": ""
               }
             ],
-            "styles": ["src/global.scss", "src/theme/variables.scss"],
+            "styles": ["src/global.scss", "src/theme/variables.scss", "node_modules/vditor/dist/index.css"],
             "scripts": [],
             "browser": "src/main.ts"
           },
